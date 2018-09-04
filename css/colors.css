@@ -1,0 +1,21 @@
+.game-table {
+	margin: 10px;
+	border: 1px solid black;
+}
+
+.game-table>tr {
+	border: 1px solid black;
+}
+
+.game-table>tr>td {
+	padding: 25px;
+	border: 1px solid black;
+}
+
+.black {
+	background-color: black;
+}
+
+.green {
+	background-color: green;	
+}
