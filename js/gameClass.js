@@ -2,6 +2,11 @@ function newGame()
 {
 	return {
 		size: 0,
+		difficulty: '',
+		playerName: '',
+		startTime: '',
+		endTime: '',
+		activateSaveScore: true, //Se não tiver firebase configurado setar false
 		moves: 0,
 		onCellClick: function (cell) {
 			this.moves++;
@@ -35,7 +40,7 @@ function newGame()
 				neighbors.push(left);
 			}
 
-			if (pos.x < size) {
+			if (pos.x < this.size) {
 				right = this.positionObject();
 				right.x = pos.x+1;
 				right.y = pos.y;
@@ -49,7 +54,7 @@ function newGame()
 				neighbors.push(up);
 			}
 
-			if (pos.y < size) {
+			if (pos.y < this.size) {
 				down = this.positionObject();
 				down.x = pos.x;
 				down.y = pos.y+1;
@@ -61,11 +66,11 @@ function newGame()
 		buildBoard: function() {
 			table = $('<table class="game-table"></table>');
 
-			for (var x = 1; x <= size; x++) {
+			for (var x = 1; x <= this.size; x++) {
 
 				tr = $('<tr></tr>');
 
-				for (var y = 1; y <= size; y++) {
+				for (var y = 1; y <= this.size; y++) {
 
 					td = $('<td id="' + x + '-' + y + '" class="game-cell"></td>');
 
@@ -123,7 +128,41 @@ function newGame()
 			}
 		},
 		endGame: function () {
-			alert('VICTORY!');
+			var d = new Date();
+			this.endTime = d.getTime();
+			swal('VICTORY!', 'Number of moves: ' + this.moves , 'success');
+
+			this.saveScore();
+
+			$('#game-details').show();
+			$('#game-content').hide();
+		},
+		start: function () {
+			$('#game-details').hide();
+			$('#game-content').show();
+
+			board = game.buildBoard();
+
+			$('#content').html(board);
+
+			$('.game-cell').bind('click', function () {
+				game.onCellClick($(this));
+			});
+
+			$('.game-table').css('height', $('.game-table').css('width'));
+		},
+		saveScore: function () {
+			if (this.activateSaveScore) {
+
+				firebase.database().ref('scores/').push({
+					name: this.playerName,
+					difficulty: this.difficulty,
+					moves: this.moves,
+					start: this.startTime,
+					end: this.endTime,
+				});
+				
+			}
 		}
 
 
