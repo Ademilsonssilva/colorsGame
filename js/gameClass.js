@@ -279,6 +279,9 @@ function newGame()
 			if (text == 'PLUS'){
 				return 'Plus';
 			}
+			if (text == 'DIAGONAL'){
+				return 'Diagonal';
+			}
 		},
 		setDifficulty: function (difficulty) {
 			this.difficulty = difficulty;
