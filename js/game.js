@@ -4,6 +4,10 @@ description_text_classic += "<strong>Regras do modo Clássico:</strong> Ao clica
 description_text_plus = '<strong>Objetivo:</strong> deixar todos os campos da mesma cor!<br>';
 description_text_plus += "<strong>Regras do modo Plus:</strong> Ao clicar em uma casa, apenas as em volta dela mudam de cor, porém a cada 3 jogadas, o campo clicado também muda!";
 
+description_text_diagonal = '<strong>Objetivo:</strong> deixar todos os campos da mesma cor!<br>';
+description_text_diagonal += "<strong>Regras do modo Diagonal:</strong> Ao clicar em uma casa, apenas as diagonais dela mudam de cor!";
+
+
 game_version = '2.0';
 
 $(document).ready(function () {
@@ -64,6 +68,9 @@ $(document).ready(function () {
 		}
 		else if ($(this).val() == 'plus') {
 			$('#game-description').html(description_text_plus);
+		}
+		else if ($(this).val() == 'diagonal') {
+			$('#game-description').html(description_text_diagonal);
 		}
 		
 	});

@@ -46,6 +46,18 @@ function newGame()
 					this.toggleColor(cell);
 				}
 			}
+			else if (this.game_style == 'diagonal') {
+				neighbors = this.getDiagonalNeighbors(cell);
+			
+				for (i = 0; i < neighbors.length; i++) {
+
+					this.toggleColor(this.positionToJQueryObj(neighbors[i]));
+
+				}
+				
+			}
+
+
 
 			this.verifyGameState();
 
@@ -86,6 +98,41 @@ function newGame()
 			if (pos.y < this.size) {
 				down = this.positionObject();
 				down.x = pos.x;
+				down.y = pos.y+1;
+				neighbors.push(down);	
+			}
+
+			return neighbors;
+		},
+		getDiagonalNeighbors: function (cell) {
+			pos = this.getIdCoordinates(cell);
+
+			neighbors = [];
+
+			if (pos.x > 1 && pos.y > 1) {
+				left = this.positionObject();
+				left.x = pos.x-1;
+				left.y = pos.y-1;
+				neighbors.push(left);
+			}
+
+			if (pos.x > 1 && pos.y < this.size) {
+				right = this.positionObject();
+				right.x = pos.x-1;
+				right.y = pos.y+1;
+				neighbors.push(right);	
+			}
+
+			if (pos.x < this.size && pos.y > 1) {
+				up = this.positionObject();
+				up.x = pos.x+1;
+				up.y = pos.y-1;
+				neighbors.push(up);
+			}
+
+			if (pos.x < this.size && pos.y < this.size) {
+				down = this.positionObject();
+				down.x = pos.x+1;
 				down.y = pos.y+1;
 				neighbors.push(down);	
 			}
