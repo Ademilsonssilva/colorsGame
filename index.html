@@ -17,10 +17,10 @@
 			<div class="col-sm-6">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
-						<a class="nav-link active" data-toggle="tab" href="#game">Game</a>
+						<a class="nav-link active" data-toggle="tab" href="#game">Jogo</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#leaderboards">Leaderboards</a>
+						<a class="nav-link" data-toggle="tab" href="#leaderboards">Líderes de placar</a>
 					</li>
 				</ul>
 			</div>
@@ -32,27 +32,56 @@
 					<div class="col-sm-12 col-md-6">
 						<div id="content"></div>
 					</div>
+					<div class="col-sm-12 col-md-6">
+						<small>
+							<p id="difficulty-ingame" class="ingame-stats"></p>
+							<p id="game-style-ingame" class="ingame-stats"></p>
+							<p id="moves-ingame" class="ingame-stats"></p>
+							<p id="plus-move-ingame" class="ingame-stats hidden"></p>
+						</small>
+						<button class="btn btn-danger btn-sm" id="surrender">Desistir</button>
+					</div>
+
 				</div>
 				<div class="row" id="game-details">
 					<div class="col-sm-12 col-md-6">
 						<div >
 
 							<div class="form-group">
-								<label for="name">Name</label>
+								<label for="name">Nome</label>
 								<input type="text" id="name" class="form-control">
 							</div>
 							
 							<div class="form-group">
-								<label for="difficulty">Difficulty</label>
+								<label for="difficulty">Dificuldade</label>
 								<select id="difficulty" class="form-control">
-									<option value="3" title="Easy">Easy</option>
-									<option value="4" title="Medium">Medium</option>
-									<option value="5" title="Hard">Hard</option>
+									<option value="easy" title="Easy">Fácil</option>
+									<option value="medium" title="Medium">Médio</option>
+									<option value="hard" title="Hard">Difícil</option>
+									<option value="expert" title="Expert">Muito difícil</option>
 								</select>
 							</div>
 							
 							<div class="form-group">
-								<button class="btn btn-success" id="start">Start!</button>
+								<label for="game-style">Estilo do jogo</label>
+								<select id="game-style" class="form-control">
+									<option value="classic" title="Classic">Clássico</option>
+									<option value="plus" title="Plus">Plus</option>
+								</select>
+							</div>
+							
+							<div id="div-game-description">
+								<small>
+									<p id="game-description">
+										
+									</p>
+								</small>
+							</div>
+
+							<div class="form-group">
+								<center>
+									<button class="btn btn-success" id="start">Jogar!</button>
+								</center>
 							</div>
 							
 
@@ -65,17 +94,26 @@
 				<div class="row">
 					<div class="col-sm-12 col-md-6">
 						<div class="form-group">
-							<label for="difficulty_leaderboards">Difficulty</label>
-							<select id="difficulty_leaderboards" class="form-control">
-								<option></option>
-								<option value="3" title="Easy">Easy</option>
-								<option value="4" title="Medium">Medium</option>
-								<option value="5" title="Hard">Hard</option>
+							<label for="game-style-leaderboards">Estilo do jogo</label>
+							<select id="game-style-leaderboards" class="form-control">
+								<option value="classic" title="Classic">Clássico</option>
+								<option value="plus" title="Plus">Plus</option>
 							</select>
 						</div>
 
-						<div>
-							<ul id="leaderboard-content"></ul>
+						<div class="form-group">
+							<label for="difficulty_leaderboards">Dificuldade</label>
+							<select id="difficulty_leaderboards" class="form-control">
+								<option></option>
+								<option value="easy" title="Easy">Fácil</option>
+								<option value="medium" title="Medium">Médio</option>
+								<option value="hard" title="Hard">Difícil</option>
+								<option value="expert" title="Expert">Muito difícil</option>
+							</select>
+						</div>
+
+						<div style="width: 90%;height: 220px;overflow: auto;">
+							<ol id="leaderboard-content"></ol>
 						</div>
 					</div>
 				</div>
@@ -87,27 +125,13 @@
 		  	<a href="#"></a>
 	  	    <span>
 		      	<a href="https://github.com/ademilsonssilva">
-		      		ademilsonssilva1@gmail.com 
+		      		<small>
+		      			ademilsonssilva1@gmail.com 
+		      		</small>
 					<span class="fab fa-github"></span>
 				</a>
 		    </span>
 		</nav>
-		<!-- <footer class="footer navbar-fixed-bottom">  
-			<div class="container-fluid">
-				<div class="row " style="background-color: red; width: 100% !important">
-					aa
-				</div>
-			</div>
-			<!-- <a href="https://github.com/ademilsonssilva">
-				<div align="left" style="float: left; width: 50%">Developed by Ademilson </div>
-
-				<div style="text-align: right;width: 50%; float: right;">
-					ademilsonssilva1@gmail.com 
-					<span class="fab fa-github"></span>
-				</div>
-			</a> 
-		</footer>-->
-
 
 	    <!-- Optional JavaScript -->
 	    <!-- jQuery first, then Popper.js, then Bootstrap JS -->

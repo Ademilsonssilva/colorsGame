@@ -14,18 +14,37 @@ function newGame()
 		size: 0,
 		difficulty: '',
 		playerName: '',
+		game_style: '',
 		startTime: '',
 		endTime: '',
 		activateSaveScore: true, //Se não tiver firebase configurado setar false
 		moves: 0,
 		onCellClick: function (cell) {
 			this.moves++;
-			neighbors = this.getNeighbors(cell);
+
+			this.updateGameDetails();
+
+			if(this.game_style == 'classic') {
+				neighbors = this.getNeighbors(cell);
 			
-			for (i = 0; i < neighbors.length; i++) {
+				for (i = 0; i < neighbors.length; i++) {
 
-				this.toggleColor(this.positionToJQueryObj(neighbors[i]));
+					this.toggleColor(this.positionToJQueryObj(neighbors[i]));
 
+				}
+			}
+			else if (this.game_style == 'plus') {
+				neighbors = this.getNeighbors(cell);
+			
+				for (i = 0; i < neighbors.length; i++) {
+
+					this.toggleColor(this.positionToJQueryObj(neighbors[i]));
+
+				}
+				
+				if(this.moves%3 == 0) {
+					this.toggleColor(cell);
+				}
 			}
 
 			this.verifyGameState();
@@ -140,12 +159,15 @@ function newGame()
 		endGame: function () {
 			var d = new Date();
 			this.endTime = d.getTime();
-			swal('VICTORY!', 'Number of moves: ' + this.moves , 'success');
+			swal('VITÓRIA!', 'Numero de jogadas: ' + this.moves , 'success');
 
 			this.saveScore();
 
-			$('#game-details').show();
-			$('#game-content').hide();
+			setTimeout(function () {
+				$('#game-details').show();
+				$('#game-content').hide();	
+			}, 2000);
+			
 		},
 		start: function () {
 			$('#game-details').hide();
@@ -160,6 +182,8 @@ function newGame()
 			});
 
 			$('.game-table').css('height', $('.game-table').css('width'));
+
+			this.updateGameDetails();
 		},
 		saveScore: function () {
 			if (this.activateSaveScore) {
@@ -170,8 +194,61 @@ function newGame()
 					moves: this.moves,
 					start: this.startTime,
 					end: this.endTime,
+					game_style: this.game_style,
 				});
 				
+			}
+		},
+		updateGameDetails: function () {
+			$('#difficulty-ingame').html('<strong>Dificuldade: </strong>' + this.translate(this.difficulty) + '<br>');
+			$('#game-style-ingame').html('<strong>Estilo de jogo: </strong>' + this.translate(this.game_style) + '<br>');
+			$('#moves-ingame').html('<strong>Jogadas: </strong>' + this.moves + '<br>');
+
+			if(this.game_style == 'plus') {
+				plus_move_counter = (3 - (this.moves % 3));
+				plus_move_counter = plus_move_counter > 1 ? plus_move_counter : 'Próxima';
+
+				$('#plus-move-ingame').show();
+				$('#plus-move-ingame').html('<strong>Proximo movimento plus em: </strong>' + plus_move_counter + '<br>');				
+			}
+		},
+		translate: function (text){
+			text = text.toUpperCase();
+			if (text == 'EASY'){
+				return 'Fácil';
+			}
+			if (text == 'MEDIUM'){
+				return 'Médio';
+			}
+			if (text == 'HARD'){
+				return 'Difícil';
+			}
+			if (text == 'EXPERT'){
+				return 'Muito Difícil';
+			}
+			if (text == 'CLASSIC') {
+				return 'Básico';
+			}
+			if (text == 'PLUS'){
+				return 'Plus';
+			}
+		},
+		setDifficulty: function (difficulty) {
+			this.difficulty = difficulty;
+			switch(difficulty){
+				case 'easy':
+					this.size = 3;
+					break;
+				case 'medium':
+					this.size = 4;
+					break;
+				case 'hard':
+					this.size = 5;
+					break;
+				case 'expert':
+					this.size = 6;
+					break;
+
 			}
 		}
 
